@@ -1,9 +1,179 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Product Management Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body></body>
+  <body>
+    <!-- ─── Header ─────────────────────────────────────── -->
+    <header class="header">
+      <div class="header__text">
+        <h1 class="header__title">Product Management Dashboard</h1>
+        <p class="header__subtitle">
+          A vanilla JavaScript demo for learning DOM manipulation and array
+          methods
+        </p>
+      </div>
+      <button class="btn-icon" id="darkModeToggle" title="Toggle dark mode">
+        🌙
+      </button>
+    </header>
+
+    <main class="main">
+      <!-- ─── Stats ───────────────────────────────────── -->
+      <section class="stats">
+        <div class="stat-card">
+          <span class="stat-card__label">Total Products</span>
+          <span class="stat-card__value" id="statTotal">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__label">Total Inventory Value</span>
+          <span class="stat-card__value stat-card__value--accent" id="statValue"
+            >$0.00</span
+          >
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__label">Most Expensive Product</span>
+          <span class="stat-card__value" id="statExpensive">—</span>
+        </div>
+      </section>
+
+      <!-- ─── Form ────────────────────────────────────── -->
+      <section class="card">
+        <h2 class="card__title" id="formTitle">Add Product</h2>
+        <div class="form">
+          <div class="form__group">
+            <label class="form__label" for="inputTitle"
+              >Title <span class="required">*</span></label
+            >
+            <input
+              class="form__input"
+              type="text"
+              id="inputTitle"
+              placeholder="e.g. Wireless Mouse"
+            />
+            <span class="form__error" id="errorTitle"></span>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="inputPrice"
+              >Price <span class="required">*</span></label
+            >
+            <input
+              class="form__input"
+              type="number"
+              id="inputPrice"
+              placeholder="0.00"
+              min="0"
+              step="0.01"
+            />
+            <span class="form__error" id="errorPrice"></span>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="inputCategory"
+              >Category <span class="required">*</span></label
+            >
+            <select class="form__input form__select" id="inputCategory">
+              <option value="">Select a category</option>
+              <option value="Electronics">Electronics</option>
+              <option value="Clothes">Clothes</option>
+              <option value="Books">Books</option>
+              <option value="Food">Food</option>
+            </select>
+            <span class="form__error" id="errorCategory"></span>
+          </div>
+          <div class="form__group">
+            <label class="form__label" for="inputStock"
+              >Stock <span class="required">*</span></label
+            >
+            <input
+              class="form__input"
+              type="number"
+              id="inputStock"
+              placeholder="0"
+              min="0"
+              step="1"
+            />
+            <span class="form__error" id="errorStock"></span>
+          </div>
+        </div>
+        <div class="form__actions">
+          <button class="btn btn--primary" id="btnSubmit">Add Product</button>
+          <button class="btn btn--ghost" id="btnCancel" style="display: none">
+            Cancel Edit
+          </button>
+        </div>
+      </section>
+
+      <!-- ─── Toolbar ──────────────────────────────────── -->
+      <section class="card toolbar">
+        <div class="toolbar__group">
+          <label class="form__label" for="searchInput">Search by Title</label>
+          <input
+            class="form__input"
+            type="text"
+            id="searchInput"
+            placeholder="Search products..."
+          />
+        </div>
+        <div class="toolbar__group">
+          <label class="form__label" for="filterCategory"
+            >Filter by Category</label
+          >
+          <select class="form__input form__select" id="filterCategory">
+            <option value="all">All</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Clothes">Clothes</option>
+            <option value="Books">Books</option>
+            <option value="Food">Food</option>
+          </select>
+        </div>
+        <div class="toolbar__group">
+          <label class="form__label" for="sortSelect">Sort By</label>
+          <select class="form__input form__select" id="sortSelect">
+            <option value="default">Default</option>
+            <option value="price-asc">Price Ascending</option>
+            <option value="price-desc">Price Descending</option>
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+          </select>
+        </div>
+        <div class="toolbar__group toolbar__group--export">
+          <button class="btn btn--ghost" id="btnExport">Export JSON</button>
+        </div>
+      </section>
+
+      <!-- ─── Table ────────────────────────────────────── -->
+      <section class="card">
+        <h2 class="card__title">Products</h2>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Stock</th>
+                <th>Created At</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tableBody">
+              <!-- rows injected by ui.js -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <!-- ─── Toast (Undo Delete) ──────────────────────── -->
+    <div class="toast" id="toast">
+      <span id="toastMessage">Product deleted.</span>
+      <button class="toast__undo" id="toastUndo">Undo</button>
+    </div>
+
+    <!-- ─── Scripts ─────────────────────────────────── -->
+    <script type="module" src="js/events.js"></script>
+  </body>
 </html>
