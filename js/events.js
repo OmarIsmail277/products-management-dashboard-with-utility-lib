@@ -1,9 +1,9 @@
 // ─── events.js ────────────────────────────────────────
 // Responsible for: wiring all DOM event listeners
 // This is the entry point — the only file loaded by index.html
-import { initProducts } from "./products.js";
+import { deleteProduct, initProducts } from "./products.js";
 import { applyFilters, setSearch, setCategory, setSort } from "./filters.js";
-import { handleSubmit, openAddForm, closeForm } from "./form.js";
+import { handleSubmit, resetForm, populateForm } from "./form.js";
 import {
   deleteWithUndo,
   undoDelete,
@@ -54,15 +54,21 @@ function wireListeners() {
   // ── Table — event delegation ─────────────────────────
   // buttons are injected dynamically so we listen on the parent
   tableBody.addEventListener("click", (e) => {
+    console.log("clicked:", e.target);
+    console.log("dataset.id:", e.target.dataset.id);
+    console.log("classList:", e.target.classList);
+
     const id = e.target.dataset.id;
     if (!id) return; // clicked somewhere else in the table
 
     if (e.target.classList.contains("btn--edit")) {
       populateForm(id);
+      applyFilters(); // ← rerender the table
     }
 
     if (e.target.classList.contains("btn--delete")) {
-      deleteWithUndo(id);
+      deleteProduct(id);
+      applyFilters(); // ← rerender the table
     }
   });
 }

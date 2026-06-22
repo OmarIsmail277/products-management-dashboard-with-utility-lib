@@ -3,13 +3,12 @@
 import { customFilter, deepClone } from "../utils/index.js";
 import { generateId, formatDate, saveToStorage } from "./helpers.js";
 import { loadProducts, saveProducts } from "./data.js";
-import { generateId } from "./helpers.js";
 
 let products = [];
 
 // getProducts — return current products array
 export function getProducts() {
-  return [...products];
+  return products;
 }
 
 // initProducts — load from localStorage on startup
@@ -53,11 +52,14 @@ export function editProduct(id, data) {
 
 // deleteProduct — remove by id, save, return deleted product
 export function deleteProduct(id) {
+  console.log("products before:", products.length);
   const deleted = findById(id);
+  console.log("found:", deleted);
 
   if (!deleted) return null;
 
   products = customFilter(products, (product) => product.id !== id);
+  console.log("products after:", products.length);
 
   saveProducts(products);
   return deleted;
@@ -75,10 +77,8 @@ export function restoreProduct(product) {
     return { success: false, error: "Invalid product data provided." };
   }
 
-  for (const existingProduct of products) {
-    if (findById(product.id)) {
-      return { success: false, error: "Product already exists in the list." };
-    }
+  if (findById(product.id)) {
+    return { success: false, error: "Product already exists in the list." };
   }
 
   products.push(product);

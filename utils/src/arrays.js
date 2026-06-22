@@ -31,9 +31,11 @@ export function customFilter(arr, callbackFn) {
 // iterate over arr, accumulate a single value using cb + initialValue
 
 export function customReduce(arr, callbackFn, initialValue) {
-  let accumulator = initialValue ? initialValue : arr[0];
+  // let accumulator = initialValue ? initialValue : arr[0];
+  let accumulator = initialValue !== undefined ? initialValue : arr[0];
 
-  const startingIndex = initialValue ? 0 : 1;
+  // const startingIndex = initialValue ? 0 : 1;
+  const startingIndex = initialValue !== undefined ? 0 : 1;
 
   for (let i = startingIndex; i < arr.length; i++) {
     accumulator = callbackFn(accumulator, arr[i], i, arr);
