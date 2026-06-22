@@ -78,3 +78,12 @@ export function loadFromStorage(key) {
     return null;
   }
 }
+
+export function sanitize(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;");
+}
