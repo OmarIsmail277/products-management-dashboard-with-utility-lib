@@ -6,7 +6,9 @@
 // generates a unique id for each product
 // uses Date.now() + random string to avoid collisions
 export function generateId() {
-  return "prod_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+  return (
+    "prod_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6)
+  );
 }
 
 // ─── formatDate ───────────────────────────────────────
@@ -15,10 +17,10 @@ export function generateId() {
 export function formatDate(dateString) {
   const date = new Date(dateString);
   return date.toLocaleString("en-US", {
-    year:   "numeric",
-    month:  "short",
-    day:    "numeric",
-    hour:   "2-digit",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
     minute: "2-digit",
   });
 }
@@ -28,7 +30,7 @@ export function formatDate(dateString) {
 // 1299.9 → "$1,299.90"
 export function formatCurrency(amount) {
   return new Intl.NumberFormat("en-US", {
-    style:    "currency",
+    style: "currency",
     currency: "USD",
   }).format(amount);
 }
@@ -56,13 +58,23 @@ export function isNonNegativeInteger(value) {
 // saves any value to localStorage under the given key
 // automatically JSON stringifies the value
 export function saveToStorage(key, value) {
-  localStorage.setItem(key, JSON.stringify(value));
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.error("Error saving to storage:", error);
+  }
 }
 
 // ─── loadFromStorage ──────────────────────────────────
 // loads and parses a value from localStorage
 // returns null if the key doesn't exist
 export function loadFromStorage(key) {
-  const item = localStorage.getItem(key);
-  return item ? JSON.parse(item) : null;
+  try {
+    const item = localStorage.getItem(key);
+
+    return item ? JSON.parse(item) : null;
+  } catch (error) {
+    console.error("Error loading from storage:", error);
+    return null;
+  }
 }
