@@ -35,10 +35,10 @@ export function formatCurrency(amount) {
   }).format(amount);
 }
 
-// ─── isRequired ───────────────────────────────────────
+// ─── isNotEmpty ───────────────────────────────────────
 // checks if a value is not empty
 // returns true if valid, false if empty
-export function isRequired(value) {
+export function isNotEmpty(value) {
   return value !== null && value !== undefined && String(value).trim() !== "";
 }
 
